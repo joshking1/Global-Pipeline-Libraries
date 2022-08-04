@@ -1,12 +1,15 @@
 def call(String project) {
 
 
-
+  sh "docker -v"
+  sh "docker build -t king-httpd ."
+  sh "docker image list"
         
-  sh 'docker build . -t deekshithsn/devops-training:$Docker_tag'
-		   withCredentials([string(credentialsId: 'docker_password', variable: 'docker_password')]) {
-				    
-				  sh 'docker login -u deekshithsn -p $docker_password'
-				  sh 'docker push deekshithsn/devops-training:$Docker_tag'
+  sh 'docker build . -t josh1991/king-httpd:king-httpd'
+	           withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'PASSWORD')]){
+		   
+	 	    
+			          sh 'docker login -u josh1991 -p $PASSWORD'
+			          sh "docker push josh1991/king-httpd:king-httpd"
 			}
 }
